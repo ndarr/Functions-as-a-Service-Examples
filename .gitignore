@@ -66,3 +66,9 @@ build
 #PyCharm
 */.idea/
 workspace.xml
+
+OpenWhisk/hello-world/\.idea/
+
+OpenWhisk/image-resizer/\.idea/
+
+OpenWhisk/imageResizer\.zip
