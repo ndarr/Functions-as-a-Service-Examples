@@ -1,8 +1,9 @@
 import json
-from imageresizer import resize
 import imageio
 import matplotlib.pyplot as plt
 import sys
+from . import imageresizer
+
 
 def handle(req):
     """handle a request to the function
@@ -17,7 +18,7 @@ def handle(req):
     #TODO: Define scale from absolute goal res like scale down to max 640x480
 
     #Resize Image
-    resizedImage = resize(img, 0.1)
+    resizedImage = imageresizer.resize(img, 0.1)
 
     #TODO: use uuid() for unique filenames
     plt.imsave('out.jpg', resizedImage)
