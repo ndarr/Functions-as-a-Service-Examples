@@ -76,3 +76,7 @@ OpenWhisk/imageResizer\.zip
 AWS Lambda/hello-world/\.idea/
 
 AWS Lambda/image-resizer/\.idea/
+
+OpenFaaS/image-resizer/\.idea/
+
+OpenFaaS/image-resizer/out\.jpg
