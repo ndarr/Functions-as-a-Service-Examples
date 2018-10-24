@@ -2,31 +2,28 @@ import json
 import imageio
 import matplotlib.pyplot as plt
 import sys
+import os
 from . import imageresizer
 
 
 def handle(req):
-    """handle a request to the function
-    Args:
-        req (str): Url to image
-    """
-
+    filename = 'out.jpg'
+    # Retrieve url to image from request
     url = json.loads(req)['imgurl']
-    # Download Image
+    # Retrieve image
     img = imageio.imread(url)
 
-    #TODO: Define scale from absolute goal res like scale down to max 640x480
+    # Resize Image
+    resized_image = imageresizer.resize(img, 0.1)
 
-    #Resize Image
-    resizedImage = imageresizer.resize(img, 0.1)
+    # Save resized image
+    plt.imsave(filename, resized_image)
 
-    #TODO: use uuid() for unique filenames
-    plt.imsave('out.jpg', resizedImage)
-
-    #Return image
-    with open('out.jpg', 'rb') as f:
+    # Write to STDOUT to return image
+    with open(filename, 'rb') as f:
         data = f.read()
         sys.stdout.buffer.write(data)
 
-    #TODO: delete temporary file
+    # Clean up disk
+    os.remove(filename)
     return

@@ -7,28 +7,29 @@ import os
 import numpy as np
 
 
-
 def main(args):
-    #json.dumps(args)
     filename = 'out.jpg'
     # Download Image
     response = requests.get(args['imgurl'])
     img = Image.open(BytesIO(response.content))
 
+    # Convert img data into NumPy-Array
     imgRaw = np.array(img)
-    #TODO: Define scale from absolute goal res like scale down to max 640x480
 
-    #Resize Image
-    resizedImageRaw = resize(imgRaw, 0.1)
+    # Resize Image
+    resized_image_raw = resize(imgRaw, 0.1)
 
-    #TODO: use uuid() for unique filenames
-    resizedImage = Image.fromarray(resizedImageRaw)
-    resizedImage.save(filename)
+    # Convert Array back to image
+    resized_image = Image.fromarray(resized_image_raw)
+    # Save image to local disk
+    resized_image.save(filename)
 
-    #Return image
+    # Read bytes from image and encode them
     with open(filename, 'rb') as f:
-        encodeImg = base64.standard_b64encode(f.read())
+        encode_img = base64.standard_b64encode(f.read())
 
+    # Clean up disk
     os.remove(filename)
-    #TODO: delete temporary file
-    return { "headers": {"Content-Type":"image/jpg", "statusCode": 200}, "body": str(encodeImg, 'utf-8')}
+
+    # Send response with encoded image
+    return {"headers": {"Content-Type": "image/jpg", "statusCode": 200}, "body": str(encode_img, 'utf-8')}

@@ -7,24 +7,35 @@ import os
 
 from imageresizer import resize
 
+
 def handler(request):
+    # Retrieve url to image from request
     imgurl = request['imgurl']
     filename = "/tmp/out.jpg"
+
+    # Retrieve image
     response = requests.get(imgurl)
     img = Image.open(BytesIO(response.content))
 
-    imgRaw = np.array(img)
+    # Convert img data into NumPy-Array
+    img_raw = np.array(img)
 
-    resizedImageRaw = resize(imgRaw, scale = 0.1)
+    # Resize Image
+    resized_image_raw = resize(img_raw, scale=0.1)
 
-    resizedImage = Image.fromarray(resizedImageRaw)
-    resizedImage.save(filename)
+    # Convert Array back to image
+    resized_image = Image.fromarray(resized_image_raw)
+    # Save image to local disk
+    resized_image.save(filename)
 
+    # Read bytes from image and encode them
     with open(filename, 'rb') as f:
-        encodeImg = base64.standard_b64encode(f.read())
+        encode_img = base64.standard_b64encode(f.read())
 
+    # Clean up disk
     os.remove(filename)
 
+    # Send response with encoded image
     return {
-        'img': str(encodeImg, "utf-8")
+        'img': str(encode_img, "utf-8")
     }
