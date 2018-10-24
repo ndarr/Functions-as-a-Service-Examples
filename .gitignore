@@ -82,3 +82,7 @@ OpenFaaS/image-resizer/\.idea/
 OpenFaaS/image-resizer/out\.jpg
 
 imageResizer\.zip
+
+Google\ Cloud\ Functions/.idea
+
+\.idea/
